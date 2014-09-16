@@ -1,12 +1,27 @@
-d3.json("polioPercent.json", function(data){
-
-var years = Object.keys(data) 
-
 //Set up the size of the graph
 var height  = 400,
 	//width   = 1000,
 	width   = 800,
 	padding = 0;
+
+var svg = d3.select("#visualization")
+			.append("svg")
+			.attr("height", height + padding)
+			.attr("width", width + padding)
+
+//Allow user to move forward on click.  
+d3.select("#continueText")
+    .on("click", function(d){
+        d3.select("#container").classed("blurred", false)
+        intro.remove()
+         
+})
+
+d3.json("polioPercent.json", function(data){
+
+var years = Object.keys(data) 
+
+
 
 var maxPercentage = 0, //need to seed this to find max and min percents. 
 	minPercentage = 0.2;
@@ -31,10 +46,6 @@ var xScale = d3.scale.ordinal()
 				.domain(d3.range(data[31].length + 1))
 				.rangeRoundBands([35,width - padding],0.2);
 
-var svg = d3.select("#visualization")
-			.append("svg")
-			.attr("height", height + padding)
-			.attr("width", width + padding)
 
 function fillColor(value){
 	if (value != 0) {
@@ -181,4 +192,5 @@ d3.select(".y")
 	})
 
 })
+
 
